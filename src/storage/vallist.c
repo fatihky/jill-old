@@ -8,7 +8,23 @@ void jill_vallist_init (struct jill_vallist *self) {
   self->val_type = -1;
 }
 
-void jill_vallist_term (struct jill_vallist *self) {}
+void jill_vallist_term (struct jill_vallist *self) {
+  assert (self);
+  int has_el = self->element_count > 0;
+  int has_capacity = self->capacity > 0;
+  // fixed-size
+  int fs = self->val_type == JILL_VALLIST_FIXED_SIZE_VALS;
+  // length-prefixed
+  int lp = self->val_type == JILL_VALLIST_LENGTH_PREFIXED_VALS;
+  if (fs && has_el) {
+    free (self->fixed_size_vals.elements);
+  }
+  else if (lp && (has_el || has_capacity)) {
+    free (self->length_prefixed_vals.lengths);
+    if (has_el)
+      free (self->length_prefixed_vals.value_buffer);
+  }
+}
 
 void jill_vallist_set_grow (struct jill_vallist *self, int grow) {
   assert (grow > 0);
