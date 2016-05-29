@@ -71,6 +71,7 @@ int jill_vallist_growby (struct jill_vallist *self, int grow) {
   else
     self->length_prefixed_vals.lengths = ptr;
 
+  self->capacity += grow;
   return 0;
 }
 
@@ -88,7 +89,7 @@ int jill_vallist_add_fixed (struct jill_vallist *self, void *valp) {
       return -rc;
   }
 
-  ptr = (char *)self->fixed_size_vals.elements
+  ptr = ((char *)self->fixed_size_vals.elements)
     + (val_size * self->element_count);
   memcpy(ptr, valp, val_size);
   self->element_count++;
