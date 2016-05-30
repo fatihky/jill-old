@@ -23,9 +23,11 @@ void jill_field_term (struct jill_field *self) {
   jill_vallist_term (&self->vallist);
 }
 
-int jill_field_add_val (struct jill_field *self, void *val, size_t *valsz) {
+int jill_field_add_val (struct jill_field *self, void *lenp, void *val,
+    size_t valsz) {
   if (self->vallist.val_type == JILL_VALLIST_FIXED_SIZE_VALS)
     return jill_vallist_add_fixed (&self->vallist, val);
   else if (self->vallist.val_type == JILL_VALLIST_LENGTH_PREFIXED_VALS)
-    return jill_vallist_add_length_prefixed (&self->vallist, val, valsz);
+    return jill_vallist_add_length_prefixed (&self->vallist, lenp, val, valsz);
+  return EINVAL;
 }
