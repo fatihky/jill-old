@@ -1,5 +1,6 @@
 #include <errno.h>
 #include <stdlib.h>
+#include <string.h>
 #include "field.h"
 
 void jill_field_init (struct jill_field *self) {
@@ -33,7 +34,7 @@ int jill_field_add_val (struct jill_field *self, void *lenp, void *val,
       return jill_vallist_add_length_prefixed (&self->vallist, lenp, val,
         valsz);
     case JILL_VALLIST_BITMAP:
-      return  jill_bitset_add (&self->bitset.bitset, *(int *)val);
+      return  jill_bitset_add (&self->vallist.bitset.bitset, *(int *)val);
     default: break;
   }
   return EINVAL;

@@ -1,4 +1,4 @@
-#include "../3rdparty/cbitset/include/bitset.h"
+#include "bitset.h"
 
 #ifndef JILL_BITSET_H_INCLUDED
 #define JILL_BITSET_H_INCLUDED

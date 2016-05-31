@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "jbitset.h"
 
 #ifndef JILL_VALLIST_H_INCLUDED
 #define JILL_VALLIST_H_INCLUDED

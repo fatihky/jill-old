@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "skiplist.h"
 
 void jill_skiplist_init (struct jill_skiplist *self) {

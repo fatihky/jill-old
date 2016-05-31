@@ -1,7 +1,6 @@
 #include <assert.h>
 #include <errno.h>
 #include "jbitset.h"
-#include "../3rdparty/cbitset/src/bitset.c"
 
 int jill_bitset_init (struct jill_bitset *self) {
   self->index = 0;

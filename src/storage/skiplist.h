@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #ifndef JILL_SKIPLIST_H_INCLUDED
 #define JILL_SKIPLIST_H_INCLUDED
 

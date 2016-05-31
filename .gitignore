@@ -2,6 +2,9 @@ src/test/field
 src/test/vallist
 src/test/bitset
 
+# build directory
+build/
+
 # cloud9 ide
 .c9/
 
