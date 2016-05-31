@@ -31,6 +31,21 @@ void jill_vallist_set_grow (struct jill_vallist *self, int grow) {
   self->grow = grow;
 }
 
+int jill_vallist_set_val_type (struct jill_vallist *self, int val_type) {
+  assert (self->val_type == -1);
+  int rc;
+  switch (val_type) {
+    case JILL_VALLIST_BITMAP: {
+      rc = jill_bitset_init (&self->bitset.bitset);
+      if (rc != 0)
+        return rc;
+    } break;
+    default: break;
+  }
+  self->val_type = val_type;
+  return 0;
+}
+
 void jill_vallist_set_fixed (struct jill_vallist *self, int val_size) {
   assert (self->val_type == -1);
   self->val_type = JILL_VALLIST_FIXED_SIZE_VALS;

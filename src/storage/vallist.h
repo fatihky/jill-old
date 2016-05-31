@@ -5,6 +5,7 @@
 
 #define JILL_VALLIST_FIXED_SIZE_VALS 1
 #define JILL_VALLIST_LENGTH_PREFIXED_VALS 2
+#define JILL_VALLIST_BITMAP 3 /*  basic bitmap */
 
 struct jill_vallist {
   int val_type;
@@ -33,6 +34,12 @@ struct jill_vallist {
        char *value_buffer;
      } length_prefixed_vals;
      /**
+      * Bitmaps
+      */
+    struct {
+      struct jill_bitset bitset;
+    } bitset;
+     /**
       * Compressed data structures will be added...
       */
   };
@@ -41,6 +48,8 @@ struct jill_vallist {
 void jill_vallist_init (struct jill_vallist *self);
 void jill_vallist_term (struct jill_vallist *self);
 void jill_vallist_set_grow (struct jill_vallist *self, int grow);
+/*  set val_type and initialize structs. returns 0 on success. */
+int jill_vallist_set_val_type (struct jill_vallist *self, int val_type);
 void jill_vallist_set_fixed (struct jill_vallist *self, int val_size);
 void jill_vallist_set_length_prefixed (struct jill_vallist *self,
   int len_size);
