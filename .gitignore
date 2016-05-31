@@ -1,5 +1,6 @@
 src/test/field
 src/test/vallist
+src/test/bitset
 
 # cloud9 ide
 .c9/

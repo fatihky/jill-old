@@ -1,0 +1,3 @@
+[submodule "src/3rdparty/cbitset"]
+	path = src/3rdparty/cbitset
+	url = https://github.com/lemire/cbitset
