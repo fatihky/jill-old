@@ -135,7 +135,6 @@ int jill_vallist_add_length_prefixed (struct jill_vallist *self, void *lenp,
   tmp = ptr;
   tmp += self->length_prefixed_vals.value_buffer_size;
   memcpy(tmp, valp, val_size);
-  ptr -= self->length_prefixed_vals.value_buffer_size;
   self->length_prefixed_vals.value_buffer = ptr;
   self->length_prefixed_vals.value_buffer_size += val_size;
 
