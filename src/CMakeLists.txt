@@ -7,6 +7,8 @@ set (LIBJILL_SRC
   storage/skiplist.c
   storage/valindex.c
   storage/vallist.c
+
+  utils/stopwatch.c
 )
 
 include_directories (3rdparty/cbitset/include)
