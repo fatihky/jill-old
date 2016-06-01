@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include "utils/stopwatch.h"
+
 #ifndef JILL_BENCH_INCLUDED
 #define JILL_BENCH_INCLUDED
 

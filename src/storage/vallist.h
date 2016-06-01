@@ -51,6 +51,8 @@ void jill_vallist_term (struct jill_vallist *self);
 void jill_vallist_set_grow (struct jill_vallist *self, int grow);
 /*  set val_type and initialize structs. returns 0 on success. */
 int jill_vallist_set_val_type (struct jill_vallist *self, int val_type);
+/*  set value list's value type. only for bitmaps currently. for other
+    value types, use _set_[fixed|length_prefixed] methods */
 void jill_vallist_set_fixed (struct jill_vallist *self, int val_size);
 void jill_vallist_set_length_prefixed (struct jill_vallist *self,
   int len_size);

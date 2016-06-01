@@ -33,6 +33,7 @@ if (LIBJILL_TESTS)
   endmacro (add_libjill_perf)
 
   add_libjill_perf (perf_jbitset)
+  add_libjill_perf (perf_vallist)
 endif ()
 
 add_subdirectory (src)

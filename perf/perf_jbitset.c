@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "storage/jbitset.h"
-#include "utils/stopwatch.h"
 #include "bench.h"
 
 int main(int argc, char *argv[]) {
