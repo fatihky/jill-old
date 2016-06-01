@@ -4,7 +4,6 @@ project (jill C)
 
 option (LIBJILL_TESTS "Build and run libjill tests" ON)
 
-add_subdirectory (src)
 add_definitions(-std=gnu11)
 include_directories (src/3rdparty/cbitset/include)
 include_directories (src)
@@ -33,5 +32,7 @@ if (LIBJILL_TESTS)
     target_link_libraries (${NAME} ${PROJECT_NAME})
   endmacro (add_libjill_perf)
 
-  # add_libjill_perf (inproc_lat)
+  add_libjill_perf (perf_jbitset)
 endif ()
+
+add_subdirectory (src)
