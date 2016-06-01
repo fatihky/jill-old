@@ -105,7 +105,7 @@ int jill_vallist_add_fixed (struct jill_vallist *self, void *valp) {
   }
 
   ptr = ((char *)self->fixed_size_vals.elements)
-    + (val_size * self->element_count);
+    + (size_t)((size_t)val_size * (size_t)self->element_count);
   memcpy(ptr, valp, val_size);
   self->element_count++;
   return 0;
