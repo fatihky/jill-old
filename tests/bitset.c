@@ -1,4 +1,5 @@
-#include "../storage/jbitset.c"
+#include <assert.h>
+#include "storage/jbitset.h"
 
 int main(int argc, char *argv[]) {
   int rc;

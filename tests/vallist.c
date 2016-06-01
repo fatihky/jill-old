@@ -1,4 +1,5 @@
-#include "../storage/vallist.c"
+#include <assert.h>
+#include "storage/vallist.h"
 
 int main(int argc, char *argv[]) {
   int rc;
