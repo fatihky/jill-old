@@ -38,8 +38,18 @@ int main(int argc, char *argv[]) {
     rc = jill_vallist_add_length_prefixed (&vl, &len, strval, (size_t)len);
     assert (rc == 0);
   });
-  //bench("every bit is off", 0);
-  //bench("rand() %% 5 == 0", rand() % 5 == 0);
+
+  jill_bench_run("length prefixed values - preallocate", {
+    jill_vallist_init(&vl);
+    jill_vallist_set_grow(&vl, GROW);
+    jill_vallist_set_length_prefixed (&vl, 4);
+    jill_vallist_lp_prealloc (&vl, len * count);
+  }, {
+    jill_vallist_term(&vl);
+  }, {
+    rc = jill_vallist_add_length_prefixed (&vl, &len, strval, (size_t)len);
+    assert (rc == 0);
+  });
 
   return 0;
 }
