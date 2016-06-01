@@ -14,3 +14,4 @@ set (LIBJILL_SRC
 include_directories (3rdparty/cbitset/include)
 add_library (${PROJECT_NAME} STATIC ${LIBJILL_SRC})
 add_definitions(-std=gnu11)
+add_definitions(-g)
