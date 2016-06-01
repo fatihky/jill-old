@@ -90,6 +90,17 @@ int jill_vallist_growby (struct jill_vallist *self, int grow) {
   return 0;
 }
 
+int jill_vallist_lp_prealloc (struct jill_vallist *self, size_t bufsz) {
+  assert (self->val_type == JILL_VALLIST_LENGTH_PREFIXED_VALS);
+  size_t newsz = self->length_prefixed_vals.value_buffer_capacity + bufsz;
+  void *ptr = realloc (self->length_prefixed_vals.value_buffer, newsz);
+  if (ptr == NULL)
+    return ENOMEM;
+  self->length_prefixed_vals.value_buffer_capacity += bufsz;
+  self->length_prefixed_vals.value_buffer = ptr;
+  return 0;
+}
+
 int jill_vallist_add_fixed (struct jill_vallist *self, void *valp) {
   int rc;
   int val_size;
@@ -117,6 +128,8 @@ int jill_vallist_add_length_prefixed (struct jill_vallist *self, void *lenp,
   int len_size;
   void *ptr;
   void *tmp;
+  size_t capacity = self->length_prefixed_vals.value_buffer_capacity;
+  size_t needed = self->length_prefixed_vals.value_buffer_size + val_size;
 
   assert (self->val_type == JILL_VALLIST_LENGTH_PREFIXED_VALS);
 
@@ -128,9 +141,14 @@ int jill_vallist_add_length_prefixed (struct jill_vallist *self, void *lenp,
   }
 
   ptr = self->length_prefixed_vals.value_buffer;
-  ptr = realloc(ptr, self->length_prefixed_vals.value_buffer_size + val_size);
-  if (ptr == NULL)
-    return ENOMEM;
+
+  if (capacity <= needed) {
+    ptr = realloc(ptr, needed);
+    if (ptr == NULL)
+      return ENOMEM;
+    /*  increase capacity */
+    self->length_prefixed_vals.value_buffer_capacity += val_size;
+  }
 
   tmp = ptr;
   tmp += self->length_prefixed_vals.value_buffer_size;

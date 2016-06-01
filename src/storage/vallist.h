@@ -30,6 +30,7 @@ struct jill_vallist {
      struct {
        /*  size of the length integer */
        int len_size;
+       size_t value_buffer_capacity;
        size_t value_buffer_size;
        char *lengths;
        char *value_buffer;
@@ -57,6 +58,8 @@ void jill_vallist_set_fixed (struct jill_vallist *self, int val_size);
 void jill_vallist_set_length_prefixed (struct jill_vallist *self,
   int len_size);
 int jill_vallist_growby (struct jill_vallist *self, int grow);
+/*  pre-allocate some memory for length-prefixed vallist's value_buffer */
+int jill_vallist_lp_prealloc (struct jill_vallist *self, size_t bufsz);
 int jill_vallist_add_fixed (struct jill_vallist *self, void *valp);
 int jill_vallist_add_length_prefixed (struct jill_vallist *self, void *lenp,
   void *valp, size_t val_size);

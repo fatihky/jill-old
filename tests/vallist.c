@@ -22,6 +22,8 @@ int main(int argc, char *argv[]) {
   jill_vallist_init (&vl);
   jill_vallist_set_length_prefixed (&vl, sizeof (int));
   jill_vallist_set_grow (&vl, 1);
+  rc = jill_vallist_lp_prealloc (&vl, 100);
+  assert (rc == 0);
   rc = jill_vallist_add_length_prefixed (&vl, &len, &val, sizeof (val));
   assert (rc == 0);
   assert (((int *)vl.length_prefixed_vals.lengths)[0] == len);
