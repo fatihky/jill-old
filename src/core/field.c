@@ -39,3 +39,8 @@ int jill_field_add_val (struct jill_field *self, void *lenp, void *val,
   }
   return EINVAL;
 }
+
+int jill_field_get_bit (struct jill_field *self, int index) {
+  assert (self->vallist.val_type == JILL_VALLIST_BITMAP);
+  return bitset_get (&self->vallist.bitset, (size_t) index);
+}
