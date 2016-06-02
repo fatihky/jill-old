@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "storage/jbitset.h"
+#include "core/jbitset.h"
 #include "bench.h"
 
 int main(int argc, char *argv[]) {

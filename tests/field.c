@@ -1,7 +1,7 @@
 #include <string.h>
 #include <assert.h>
-#include "storage/field.h"
-#include "storage/vallist.h"
+#include "core/field.h"
+#include "core/vallist.h"
 
 int main(int argc, char *argv[]) {
   int rc;

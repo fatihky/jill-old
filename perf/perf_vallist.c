@@ -1,5 +1,5 @@
 
-#include "storage/vallist.h"
+#include "core/vallist.h"
 #include "bench.h"
 
 #define GROW 10

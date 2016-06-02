@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "storage/jbitset.h"
+#include "core/jbitset.h"
 
 int main(int argc, char *argv[]) {
   int rc;

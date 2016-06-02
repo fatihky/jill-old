@@ -20,7 +20,7 @@ if (LIBJILL_TESTS)
     set_tests_properties (${NAME} PROPERTIES TIMEOUT ${TIMEOUT})
   endmacro (add_libjill_test)
 
-  #  Storage tests
+  #  Core tests
   add_libjill_test (bitset 5)
   add_libjill_test (field 5)
   add_libjill_test (vallist 5)
