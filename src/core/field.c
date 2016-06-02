@@ -42,5 +42,17 @@ int jill_field_add_val (struct jill_field *self, void *lenp, void *val,
 
 int jill_field_get_bit (struct jill_field *self, int index) {
   assert (self->vallist.val_type == JILL_VALLIST_BITMAP);
+  assert (index >= 0);
   return bitset_get (&self->vallist.bitset, (size_t) index);
+}
+
+int jill_field_get_fixed (struct jill_field *self, int index, void **valp) {
+  assert (self->vallist.val_type == JILL_VALLIST_FIXED_SIZE_VALS);
+  assert (index >= 0);
+  size_t offset = (size_t)index * self->vallist.fixed_size_vals.val_size;
+  /*  check if index is valid */
+  if (index >= self->vallist.element_count)
+    return EINVAL;
+  *valp = (self->vallist.fixed_size_vals.elements + offset);
+  return 0;
 }
