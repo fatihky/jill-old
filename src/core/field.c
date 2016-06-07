@@ -1,6 +1,7 @@
-#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
+#include <assert.h>
 #include "field.h"
 
 void jill_field_init (struct jill_field *self) {
