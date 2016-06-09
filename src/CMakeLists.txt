@@ -5,7 +5,7 @@ set (LIBJILL_SRC
   core/jbitset.c
   core/piece.c
   core/skiplist.c
-  core/valindex.c
+  # core/valindex.c
   core/vallist.c
 
   utils/stopwatch.c
