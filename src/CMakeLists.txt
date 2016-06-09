@@ -2,11 +2,12 @@ set (LIBJILL_SRC
   3rdparty/cbitset/src/bitset.c
 
   core/field.c
-  core/jbitset.c
   core/piece.c
   core/skiplist.c
   # core/valindex.c
   core/vallist.c
+
+  vallist/jbitset.c
 
   utils/stopwatch.c
 )
