@@ -1,7 +1,7 @@
 #include "bitset.h"
 
-#ifndef JILL_BITSET_H_INCLUDED
-#define JILL_BITSET_H_INCLUDED
+#ifndef JILL_BITSET_INCLUDED
+#define JILL_BITSET_INCLUDED
 
 /**
  * Uncompressed bitmap data structure
