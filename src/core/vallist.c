@@ -4,6 +4,7 @@
 #include <errno.h>
 #include "vallist.h"
 #include "../utils/cont.h"
+#include "../vallist/common.h"
 
 static struct jill_vallist_base **base_arr = NULL;
 static int base_arr_len = 0;
@@ -14,7 +15,7 @@ int jill_vallist_global_init() {
 }
 
 int jill_vallist_last_internal_index() {
-  return 0; /*  no internal vallist implementations yet. */
+  return JILL_VALLIST_MAX_ID;
 }
 
 int jill_vallist_register (int type, struct jill_vallist_base *base) {
