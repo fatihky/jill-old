@@ -11,6 +11,10 @@ static int base_arr_len = 0;
 
 int jill_vallist_global_init() {
   /*  register default types. */
+  int rc;
+  rc = jill_vallist_register (JILL_VALLIST_BITSET, &jill_vallist_bitset_base);
+  if (rc != 0)
+    return rc;
   return 0;
 }
 
@@ -21,9 +25,6 @@ int jill_vallist_last_internal_index() {
 int jill_vallist_register (int type, struct jill_vallist_base *base) {
   assert (type >= 0);
   assert (base);
-  /*  check if index exceeds array's length */
-  if (type >= base_arr_len)
-    return EINVAL;
   void *ptr = NULL;
   size_t nsize = (base_arr_len + 1) * sizeof(void *);
   ptr = realloc(base_arr, nsize);
@@ -35,6 +36,7 @@ int jill_vallist_register (int type, struct jill_vallist_base *base) {
   /*  base_arr_len is not incremented yet. so we can use it as array's
       index. */
   ((struct jill_vallist_base **)ptr)[base_arr_len] = base;
+  base_arr = ptr;
   base_arr_len++;
   return 0;
 }
@@ -55,8 +57,9 @@ int jill_vallist_set (struct jill_vallist *self, int index,
   return self->base->set (self, index, value);
 }
 
-int jill_vallist_get (struct jill_vallist *self, struct jill_value **value) {
-  return self->base->get (self, value);
+int jill_vallist_get (struct jill_vallist *self, int index,
+    struct jill_value **value) {
+  return self->base->get (self, index, value);
 }
 
 int jill_vallist_query (struct jill_vallist *self, void *query, void *result) {

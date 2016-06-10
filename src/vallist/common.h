@@ -1,3 +1,5 @@
+#include "jbitset.h"
+
 #ifndef JILL_VALLIST_COMMON_INCLUDED
 #define JILL_VALLIST_COMMON_INCLUDED
 

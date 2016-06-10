@@ -16,7 +16,7 @@ struct jill_vallist_base {
   int (*set) (struct jill_vallist *self, int index,
     struct jill_value *value);
   /*  get value of the nth element. */
-  int (*get) (struct jill_vallist *self, struct jill_value **value);
+  int (*get) (struct jill_vallist *self, int index, struct jill_value **value);
   /*  query the index */
   int (*query) (struct jill_vallist *self, void *query, void *result);
 };
@@ -50,7 +50,8 @@ int jill_vallist_set (struct jill_vallist *self, int index,
   struct jill_value *value);
 
 /*  get value of the nth element. */
-int jill_vallist_get (struct jill_vallist *self, struct jill_value **value);
+int jill_vallist_get (struct jill_vallist *self, int index,
+  struct jill_value **value);
 
 /*  query the index */
 int jill_vallist_query (struct jill_vallist *self, void *query, void *result);

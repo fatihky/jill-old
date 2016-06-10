@@ -5,6 +5,8 @@
 #define GROW 10
 
 int main(int argc, char *argv[]) {
+
+#if 0
   int count = 1000000;
   int rc;
   int fixedval = 274;
@@ -50,6 +52,8 @@ int main(int argc, char *argv[]) {
     rc = jill_vallist_add_length_prefixed (&vl, &len, strval, (size_t)len);
     assert (rc == 0);
   });
+
+#endif
 
   return 0;
 }
