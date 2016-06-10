@@ -26,18 +26,25 @@ int jill_vallist_register (int type, struct jill_vallist_base *base) {
   assert (type >= 0);
   assert (base);
   void *ptr = NULL;
-  size_t nsize = (base_arr_len + 1) * sizeof(void *);
-  ptr = realloc(base_arr, nsize);
-  if (ptr == NULL)
-    return ENOMEM;
-  if (base_arr)
-    memcpy (ptr, base_arr, nsize - sizeof(void *));
+  int expected_len = type + 1;
+
+  if (base_arr_len < expected_len) {
+    size_t nsize = (base_arr_len + 1) * sizeof(void *);
+    ptr = realloc(base_arr, nsize);
+    if (ptr == NULL)
+      return ENOMEM;
+    /*  copy old data */
+    if (base_arr)
+      memcpy (ptr, base_arr, nsize - sizeof(void *));
+    base_arr = ptr;
+  }
 
   /*  base_arr_len is not incremented yet. so we can use it as array's
       index. */
-  ((struct jill_vallist_base **)ptr)[base_arr_len] = base;
-  base_arr = ptr;
-  base_arr_len++;
+  base_arr[type] = base;
+  base_arr_len = base_arr_len > expected_len
+                 ? base_arr_len
+                 : expected_len;
   return 0;
 }
 
