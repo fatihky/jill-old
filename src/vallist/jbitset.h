@@ -4,7 +4,7 @@
 #define JILL_BITSET_INCLUDED
 
 /*  vallist type */
-#define JILL_VALLIST_BITSET 0
+#define JILL_VALLIST_BITSET 2
 
 extern struct jill_vallist_base jill_vallist_bitset_base;
 
