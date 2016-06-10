@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   }
 
   #define step(val_expr) { \
-    rc = jill_vallist_insert (vl, val_expr ? NULL : &value); \
+    rc = jill_vallist_insert (vl, val_expr ? &value : NULL); \
     assert (rc == 0); \
   }
 
