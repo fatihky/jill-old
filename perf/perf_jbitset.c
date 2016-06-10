@@ -11,6 +11,7 @@ int main(int argc, char *argv[]) {
   int ival;
   struct jill_vallist *vl;
   struct jill_value value;
+  struct jill_value *valp = &value;
 
   value.valp = &ival;
   rc = jill_vallist_global_init();
@@ -39,7 +40,23 @@ int main(int argc, char *argv[]) {
     jill_bench_run(name, init, term, step(val_expr))
 
   bench("every bit is set", 1);
+  /*  validate */
+  for (int i = 0; i < count; i++) {
+    ival = 0;
+    rc = jill_vallist_get (vl, i, &valp);
+    assert (rc == 0);
+    assert (ival == 1);
+  }
+
   bench("every bit is off", 0);
+  /*  validate */
+  for (int i = 0; i < count; i++) {
+    ival = 1;
+    rc = jill_vallist_get (vl, i, &valp);
+    assert (rc == 0);
+    assert (ival == 0);
+  }
+
   bench("rand() %% 5 == 0", rand() % 5 == 0);
 
   return 0;
