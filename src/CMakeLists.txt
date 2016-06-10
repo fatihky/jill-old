@@ -8,6 +8,7 @@ set (LIBJILL_SRC
   core/vallist.c
 
   vallist/jbitset.c
+  vallist/fixed.c
 
   utils/stopwatch.c
 )
