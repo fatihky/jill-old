@@ -19,6 +19,8 @@ struct jill_vallist_base {
   int (*get) (struct jill_vallist *self, int index, struct jill_value **value);
   /*  query the index */
   int (*query) (struct jill_vallist *self, void *query, void *result);
+  /*  free allocated memory for vallist */
+  void (*destroy) (struct jill_vallist *self);
 };
 
 struct jill_vallist {
@@ -55,5 +57,8 @@ int jill_vallist_get (struct jill_vallist *self, int index,
 
 /*  query the index */
 int jill_vallist_query (struct jill_vallist *self, void *query, void *result);
+
+/*  destroy the index */
+void jill_vallist_destroy (struct jill_vallist *self);
 
 #endif

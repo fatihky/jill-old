@@ -22,6 +22,7 @@ static int jill_vallist_bitset_get (struct jill_vallist *self, int index,
     struct jill_value **value);
 static int jill_vallist_bitset_query (struct jill_vallist *self, void *query,
     void *result);
+static void jill_vallist_bitset_destroy (struct jill_vallist *self);
 
 struct jill_vallist_base jill_vallist_bitset_base = {
   JILL_VALLIST_BITSET,
@@ -29,7 +30,8 @@ struct jill_vallist_base jill_vallist_bitset_base = {
   jill_vallist_bitset_insert,
   jill_vallist_bitset_set,
   jill_vallist_bitset_get,
-  jill_vallist_bitset_query
+  jill_vallist_bitset_query,
+  jill_vallist_bitset_destroy
 };
 
 static struct jill_vallist *jill_vallist_bitset_create (void *arg) {
@@ -112,4 +114,11 @@ static int jill_vallist_bitset_get (struct jill_vallist *self, int index,
 static int jill_vallist_bitset_query (struct jill_vallist *self, void *query,
     void *result) {
   return EINVAL;
+}
+
+static void jill_vallist_bitset_destroy (struct jill_vallist *self) {
+  struct jill_vallist_bitset *bs = jill_cont (self, struct jill_vallist_bitset,
+    vallist);
+  bitset_free (bs->bitset);
+  free (bs);
 }

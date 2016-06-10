@@ -65,3 +65,7 @@ int jill_vallist_get (struct jill_vallist *self, int index,
 int jill_vallist_query (struct jill_vallist *self, void *query, void *result) {
   return self->base->query (self, query, result);
 }
+
+void jill_vallist_destroy (struct jill_vallist *self) {
+  return self->base->destroy (self);
+}

@@ -20,5 +20,6 @@ int main(int argc, char *argv[]) {
   rc = jill_vallist_get (vl, 0, &valuep);
   assert (rc == 0);
   assert (ival == 1);
+  jill_vallist_destroy (vl);
   return 0;
 }
