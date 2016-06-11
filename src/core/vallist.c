@@ -27,6 +27,7 @@ int jill_vallist_register (int type, struct jill_vallist_base *base) {
   assert (base);
   void *ptr = NULL;
   int expected_len = type + 1;
+  int diff;
 
   if (base_arr_len < expected_len) {
     size_t nsize = expected_len * sizeof(void *);
@@ -36,6 +37,12 @@ int jill_vallist_register (int type, struct jill_vallist_base *base) {
     /*  copy old data */
     if (base_arr)
       memcpy (ptr, base_arr, nsize - sizeof(void *));
+
+    /*  mark difference area as NULL */
+    diff = expected_len - base_arr_len - 1;
+    for (int i = 0; i < diff; i++)
+      ((void **)ptr)[i + base_arr_len] = NULL;
+
     base_arr = ptr;
     base_arr_len = expected_len;
   }
