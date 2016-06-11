@@ -29,7 +29,7 @@ int jill_vallist_register (int type, struct jill_vallist_base *base) {
   int expected_len = type + 1;
 
   if (base_arr_len < expected_len) {
-    size_t nsize = (base_arr_len + 1) * sizeof(void *);
+    size_t nsize = expected_len * sizeof(void *);
     ptr = realloc(base_arr, nsize);
     if (ptr == NULL)
       return ENOMEM;
@@ -37,14 +37,12 @@ int jill_vallist_register (int type, struct jill_vallist_base *base) {
     if (base_arr)
       memcpy (ptr, base_arr, nsize - sizeof(void *));
     base_arr = ptr;
+    base_arr_len = expected_len;
   }
 
   /*  base_arr_len is not incremented yet. so we can use it as array's
       index. */
   base_arr[type] = base;
-  base_arr_len = base_arr_len > expected_len
-                 ? base_arr_len
-                 : expected_len;
   return 0;
 }
 
