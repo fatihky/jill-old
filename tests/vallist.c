@@ -1,7 +1,27 @@
 #include <assert.h>
 #include "core/vallist.h"
+#include "vallist/fixed.h"
 
 int main(int argc, char *argv[]) {
+  int rc;
+  int subtype;
+  int val;
+  struct jill_vallist *vl;
+  struct jill_value value;
+
+  rc = jill_vallist_global_init();
+  assert (rc == 0);
+  {
+    // text fixed length
+    subtype = JILL_VALLIST_FIXED_I32;
+    vl = jill_vallist_create (JILL_VALLIST_FIXED, &subtype);
+    assert (vl);
+    /*  add value */
+    val = 274;
+    value.valp = &val;
+    rc = jill_vallist_insert (vl, &value);
+    assert (rc == 0);
+  }
 #if 0
   int rc;
   int val = 274;
