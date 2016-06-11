@@ -1,4 +1,5 @@
 #include "jbitset.h"
+#include "len_prefixed.h"
 #include "fixed.h"
 
 #ifndef JILL_VALLIST_COMMON_INCLUDED

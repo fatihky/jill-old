@@ -12,6 +12,13 @@ static int base_arr_len = 0;
 int jill_vallist_global_init() {
   /*  register default types. */
   int rc;
+  rc = jill_vallist_register (JILL_VALLIST_FIXED, &jill_vallist_fixed_base);
+  if (rc != 0)
+    return rc;
+  rc = jill_vallist_register (JILL_VALLIST_LENGTH_PREFIXED,
+    &jill_vallist_length_prefixed_base);
+  if (rc != 0)
+    return rc;
   rc = jill_vallist_register (JILL_VALLIST_BITSET, &jill_vallist_bitset_base);
   if (rc != 0)
     return rc;
