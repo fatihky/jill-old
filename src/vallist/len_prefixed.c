@@ -60,6 +60,7 @@ static struct jill_vallist *jill_vallist_length_prefixed_create (void *arg) {
     return NULL;
   }
 
+  lp->vallist.base = &jill_vallist_length_prefixed_base;
   lp->subtype = subtype;
   lp->grow = JILL_VALLIST_LENGTH_PREFIXED_DEFAULT_GROW;
 

@@ -66,6 +66,7 @@ static struct jill_vallist *jill_vallist_fixed_create (void *arg_) {
     return NULL;
   }
 
+  fx->vallist.base = &jill_vallist_fixed_base;
   fx->grow = JILL_VALLIST_GROW_DEFAULT;
   fx->subtype = args[0];
   if (fx->subtype == JILL_VALLIST_FIXED_CUSTOM)
