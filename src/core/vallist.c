@@ -41,9 +41,6 @@ int jill_vallist_register (int type, struct jill_vallist_base *base) {
     ptr = realloc(base_arr, nsize);
     if (ptr == NULL)
       return ENOMEM;
-    /*  copy old data */
-    if (base_arr)
-      memcpy (ptr, base_arr, nsize - sizeof(void *));
 
     /*  mark difference area as NULL */
     diff = expected_len - base_arr_len - 1;
