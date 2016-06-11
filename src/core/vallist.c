@@ -55,7 +55,14 @@ int jill_vallist_register (int type, struct jill_vallist_base *base) {
 
 struct jill_vallist *jill_vallist_create (int type, void *arg) {
   assert (type >= 0);
-  assert (type < base_arr_len);
+  if (type >= base_arr_len) {
+    errno = EINVAL;
+    return NULL;
+  }
+  if (!base_arr[type]) {
+    errno = EINVAL;
+    return NULL;
+  }
   return base_arr[type]->create (arg);
 }
 
