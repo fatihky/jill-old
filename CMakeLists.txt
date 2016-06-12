@@ -11,6 +11,7 @@ include_directories (src)
 if (LIBJILL_TESTS)
   enable_testing ()
   set (all_tests "")
+  add_definitions(-g)
 
   macro (add_libjill_test NAME TIMEOUT)
     list (APPEND all_tests ${NAME})
