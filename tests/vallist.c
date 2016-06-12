@@ -21,6 +21,7 @@ int main(int argc, char *argv[]) {
     value.valp = &val;
     rc = jill_vallist_insert (vl, &value);
     assert (rc == 0);
+    jill_vallist_destroy (vl);
   }
 #if 0
   int rc;
