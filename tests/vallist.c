@@ -8,6 +8,8 @@ int main(int argc, char *argv[]) {
   int val;
   struct jill_vallist *vl;
   struct jill_value value;
+  struct jill_value *valp = &value;
+  value.valp = &val;
 
   rc = jill_vallist_global_init();
   assert (rc == 0);
@@ -17,10 +19,22 @@ int main(int argc, char *argv[]) {
     vl = jill_vallist_create (JILL_VALLIST_FIXED, &subtype);
     assert (vl);
     /*  add value */
+    /*  add value 1 */
     val = 274;
-    value.valp = &val;
     rc = jill_vallist_insert (vl, &value);
     assert (rc == 0);
+    val = -1;
+    rc = jill_vallist_get (vl, 0, &valp);
+    assert (rc == 0);
+    assert (val == 274);
+    /*  add value 2 */
+    val = 236;
+    rc = jill_vallist_insert (vl, &value);
+    assert (rc == 0);
+    val = -1;
+    rc = jill_vallist_get (vl, 1, &valp);
+    assert (rc == 0);
+    assert (val == 236);
     jill_vallist_destroy (vl);
   }
 #if 0
@@ -28,18 +42,6 @@ int main(int argc, char *argv[]) {
   int val = 274;
   int len = sizeof(int);
   struct jill_vallist vl;
-  // fixed-length value list
-  jill_vallist_init (&vl);
-  jill_vallist_set_fixed (&vl, 4);
-  jill_vallist_set_grow (&vl, 1);
-  rc = jill_vallist_add_fixed (&vl, &val);
-  assert (rc == 0);
-  assert (((int *)vl.fixed_size_vals.elements)[0] == val);
-  val += 236;
-  rc = jill_vallist_add_fixed (&vl, &val);
-  assert (rc == 0);
-  assert (((int *)vl.fixed_size_vals.elements)[1] == val);
-  jill_vallist_term(&vl);
   // length-prefixed value list
   jill_vallist_init (&vl);
   jill_vallist_set_length_prefixed (&vl, sizeof (int));
