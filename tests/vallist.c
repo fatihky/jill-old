@@ -1,15 +1,18 @@
 #include <assert.h>
 #include "core/vallist.h"
 #include "vallist/fixed.h"
+#include "vallist/len_prefixed.h"
 
 int main(int argc, char *argv[]) {
   int rc;
   int subtype;
   int val;
+  int len;
   struct jill_vallist *vl;
   struct jill_value value;
   struct jill_value *valp = &value;
   value.valp = &val;
+  value.lenp = &len;
 
   rc = jill_vallist_global_init();
   assert (rc == 0);
@@ -37,22 +40,22 @@ int main(int argc, char *argv[]) {
     assert (val == 236);
     jill_vallist_destroy (vl);
   }
-#if 0
-  int rc;
-  int val = 274;
-  int len = sizeof(int);
-  struct jill_vallist vl;
-  // length-prefixed value list
-  jill_vallist_init (&vl);
-  jill_vallist_set_length_prefixed (&vl, sizeof (int));
-  jill_vallist_set_grow (&vl, 1);
-  rc = jill_vallist_lp_prealloc (&vl, 100);
-  assert (rc == 0);
-  rc = jill_vallist_add_length_prefixed (&vl, &len, &val, sizeof (val));
-  assert (rc == 0);
-  assert (((int *)vl.length_prefixed_vals.lengths)[0] == len);
-  assert (((int *)vl.length_prefixed_vals.value_buffer)[0] == val);
-  jill_vallist_term(&vl);
-#endif
+
+  {
+    // length-prefixed vallist tests
+    subtype = JILL_VALLIST_LENGTH_PREFIXED_I32;
+    vl = jill_vallist_create (JILL_VALLIST_LENGTH_PREFIXED, &subtype);
+    assert (vl);
+    len = 5;
+    value.valp = "fatih";
+    rc = jill_vallist_insert (vl, &value);
+    assert (rc == 0);
+    len = -1;
+    rc = jill_vallist_get (vl, 0, &valp);
+    assert (rc == 0);
+    assert (*(int *)value.lenp == len);
+    jill_vallist_destroy (vl);
+  }
+
   return 0;
 }
