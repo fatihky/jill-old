@@ -109,7 +109,7 @@ static int jill_vallist_fixed_grow (struct jill_vallist_fixed *fx) {
   size_t one_el_sz = jill_vallist_fixed_one_el_size (fx);
   size_t needed = one_el_sz * (fx->capacity + fx->grow);
   ptr = realloc (ptr, needed);
-  if (ptr)
+  if (!ptr)
     return ENOMEM;
   fx->arr.custom = ptr;
   fx->capacity += fx->grow;
