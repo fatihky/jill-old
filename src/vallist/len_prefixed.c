@@ -178,6 +178,10 @@ static int jill_vallist_length_prefixed_insert (struct jill_vallist *self,
   /*  encode the value */
   memcpy (lp->valbuf + lp->valbuf_size, value->valp, vallen);
   lp->valbuf_size += vallen;
+
+  /*  increase element count */
+  lp->count++;
+
   return 0;
 }
 
@@ -189,8 +193,25 @@ static int jill_vallist_length_prefixed_set (struct jill_vallist *self,
 
 static int jill_vallist_length_prefixed_get (struct jill_vallist *self,
     int index, struct jill_value **value) {
-  /*  not supported yet */
-  return EINVAL;
+  struct jill_vallist_length_prefixed *lp = jill_cont (self,
+    struct jill_vallist_length_prefixed, vallist);
+  /*  check if index is valid or not */
+  if (index < 0 || index >= lp->count)
+    return EINVAL;
+
+  char *lb = lp->lenbuf;
+  char *p = lp->valbuf;
+  int lensz = jill_vallist_length_prefixed_lensz (lp);
+
+  for (int i = 0; i < index; i++) {
+    p += jill_vallist_length_prefixed_len (lp, lb);
+    lb += lensz;
+  }
+
+  (*value)->lenp = lb;
+  (*value)->valp = p;
+
+  return 0;
 }
 
 static int jill_vallist_length_prefixed_query (struct jill_vallist *self,
