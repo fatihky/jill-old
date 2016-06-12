@@ -12,6 +12,7 @@
 struct jill_vallist_length_prefixed;
 
 static struct jill_vallist *jill_vallist_length_prefixed_create (void *arg);
+static void jill_vallist_length_prefixed_destroy (struct jill_vallist *self);
 static int jill_vallist_length_prefixed_insert (struct jill_vallist *self,
   struct jill_value *value);
 static int jill_vallist_length_prefixed_set (struct jill_vallist *self,
@@ -20,7 +21,6 @@ static int jill_vallist_length_prefixed_get (struct jill_vallist *self,
   int index, struct jill_value **value);
 static int jill_vallist_length_prefixed_query (struct jill_vallist *self,
   void *query, void *result);
-static void jill_vallist_length_prefixed_destroy (struct jill_vallist *self);
 
 static inline int jill_vallist_length_prefixed_lensz (
   struct jill_vallist_length_prefixed *self);
@@ -28,11 +28,11 @@ static inline int jill_vallist_length_prefixed_lensz (
 struct jill_vallist_base jill_vallist_length_prefixed_base = {
   JILL_VALLIST_LENGTH_PREFIXED,
   jill_vallist_length_prefixed_create,
+  jill_vallist_length_prefixed_destroy,
   jill_vallist_length_prefixed_insert,
   jill_vallist_length_prefixed_set,
   jill_vallist_length_prefixed_get,
-  jill_vallist_length_prefixed_query,
-  jill_vallist_length_prefixed_destroy
+  jill_vallist_length_prefixed_query
 };
 
 struct jill_vallist_length_prefixed {

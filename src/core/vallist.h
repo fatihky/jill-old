@@ -9,6 +9,8 @@ struct jill_vallist_base {
   /*  create funcion. argument can be anything. for example, it can be sub-type
       of the index. must return NULL on error and set errno. */
   struct jill_vallist *(*create) (void *arg);
+  /*  free allocated memory for vallist */
+  void (*destroy) (struct jill_vallist *self);
   /*  insert new element to the index. returns errno if error,
       zero on success. */
   int (*insert) (struct jill_vallist *self, struct jill_value *value);
@@ -19,8 +21,6 @@ struct jill_vallist_base {
   int (*get) (struct jill_vallist *self, int index, struct jill_value **value);
   /*  query the index */
   int (*query) (struct jill_vallist *self, void *query, void *result);
-  /*  free allocated memory for vallist */
-  void (*destroy) (struct jill_vallist *self);
 };
 
 struct jill_vallist {
