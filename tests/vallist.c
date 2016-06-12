@@ -1,3 +1,4 @@
+#include <string.h>
 #include <assert.h>
 #include "core/vallist.h"
 #include "vallist/fixed.h"
@@ -53,6 +54,7 @@ int main(int argc, char *argv[]) {
     rc = jill_vallist_get (vl, 0, &valp);
     assert (rc == 0);
     assert (*(int *)value.lenp == len);
+    assert (memcmp (value.valp, "fatih", 5) == 0);
     jill_vallist_destroy (vl);
   }
 
