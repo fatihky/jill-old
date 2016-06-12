@@ -50,7 +50,6 @@ int main(int argc, char *argv[]) {
     value.valp = "fatih";
     rc = jill_vallist_insert (vl, &value);
     assert (rc == 0);
-    len = -1;
     rc = jill_vallist_get (vl, 0, &valp);
     assert (rc == 0);
     assert (*(int *)value.lenp == len);
