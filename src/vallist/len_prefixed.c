@@ -2,11 +2,14 @@
 #include <string.h>
 #include <stdint.h>
 #include <errno.h>
+#include <assert.h>
 #include "../core/vallist.h"
 #include "../utils/cont.h"
 #include "len_prefixed.h"
 
 #define JILL_VALLIST_LENGTH_PREFIXED_DEFAULT_GROW 10
+
+struct jill_vallist_length_prefixed;
 
 static struct jill_vallist *jill_vallist_length_prefixed_create (void *arg);
 static int jill_vallist_length_prefixed_insert (struct jill_vallist *self,
@@ -18,6 +21,9 @@ static int jill_vallist_length_prefixed_get (struct jill_vallist *self,
 static int jill_vallist_length_prefixed_query (struct jill_vallist *self,
   void *query, void *result);
 static void jill_vallist_length_prefixed_destroy (struct jill_vallist *self);
+
+static inline int jill_vallist_length_prefixed_lensz (
+  struct jill_vallist_length_prefixed *self);
 
 struct jill_vallist_base jill_vallist_length_prefixed_base = {
   JILL_VALLIST_LENGTH_PREFIXED,
@@ -63,6 +69,8 @@ static struct jill_vallist *jill_vallist_length_prefixed_create (void *arg) {
   lp->vallist.base = &jill_vallist_length_prefixed_base;
   lp->subtype = subtype;
   lp->grow = JILL_VALLIST_LENGTH_PREFIXED_DEFAULT_GROW;
+  lp->lensz = jill_vallist_length_prefixed_lensz (lp);
+  assert (lp->lensz > 0);
 
   return &lp->vallist;
 
