@@ -15,6 +15,10 @@ struct jill_vallist_bitset {
 
 static struct jill_vallist *jill_vallist_bitset_create (void *arg);
 static void jill_vallist_bitset_destroy (struct jill_vallist *self);
+static int jill_vallist_bitset_setopt (struct jill_vallist *self, int option, const void *optval,
+  size_t optvallen);
+static int jill_vallist_bitset_getopt (struct jill_vallist *self, int option, void *optval,
+  size_t *optvallen);
 static int jill_vallist_bitset_insert (struct jill_vallist *self,
   struct jill_value *value);
 static int jill_vallist_bitset_set (struct jill_vallist *self, int index,
@@ -28,6 +32,8 @@ struct jill_vallist_base jill_vallist_bitset_base = {
   JILL_VALLIST_BITSET,
   jill_vallist_bitset_create,
   jill_vallist_bitset_destroy,
+  jill_vallist_bitset_setopt,
+  jill_vallist_bitset_getopt,
   jill_vallist_bitset_insert,
   jill_vallist_bitset_set,
   jill_vallist_bitset_get,
@@ -54,6 +60,25 @@ enomem:
     free (bs);
   errno = ENOMEM;
   return NULL;
+}
+
+static void jill_vallist_bitset_destroy (struct jill_vallist *self) {
+  struct jill_vallist_bitset *bs = jill_cont (self, struct jill_vallist_bitset,
+    vallist);
+  bitset_free (bs->bitset);
+  free (bs);
+}
+
+static int jill_vallist_bitset_setopt (struct jill_vallist *self, int option, const void *optval,
+    size_t optvallen) {
+  /*  not supported */
+  return EINVAL;
+}
+
+static int jill_vallist_bitset_getopt (struct jill_vallist *self, int option, void *optval,
+    size_t *optvallen) {
+  /*  not supported */
+  return EINVAL;
 }
 
 static int jill_vallist_bitset_insert (struct jill_vallist *self,
@@ -114,11 +139,4 @@ static int jill_vallist_bitset_get (struct jill_vallist *self, int index,
 static int jill_vallist_bitset_query (struct jill_vallist *self, void *query,
     void *result) {
   return EINVAL;
-}
-
-static void jill_vallist_bitset_destroy (struct jill_vallist *self) {
-  struct jill_vallist_bitset *bs = jill_cont (self, struct jill_vallist_bitset,
-    vallist);
-  bitset_free (bs->bitset);
-  free (bs);
 }

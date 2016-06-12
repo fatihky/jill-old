@@ -13,6 +13,10 @@ struct jill_vallist_length_prefixed;
 
 static struct jill_vallist *jill_vallist_length_prefixed_create (void *arg);
 static void jill_vallist_length_prefixed_destroy (struct jill_vallist *self);
+static int jill_vallist_length_prefixed_setopt (struct jill_vallist *self,
+  int option, const void *optval, size_t optvallen);
+static int jill_vallist_length_prefixed_getopt (struct jill_vallist *self,
+  int option, void *optval, size_t *optvallen);
 static int jill_vallist_length_prefixed_insert (struct jill_vallist *self,
   struct jill_value *value);
 static int jill_vallist_length_prefixed_set (struct jill_vallist *self,
@@ -29,6 +33,8 @@ struct jill_vallist_base jill_vallist_length_prefixed_base = {
   JILL_VALLIST_LENGTH_PREFIXED,
   jill_vallist_length_prefixed_create,
   jill_vallist_length_prefixed_destroy,
+  jill_vallist_length_prefixed_setopt,
+  jill_vallist_length_prefixed_getopt,
   jill_vallist_length_prefixed_insert,
   jill_vallist_length_prefixed_set,
   jill_vallist_length_prefixed_get,
@@ -77,6 +83,28 @@ static struct jill_vallist *jill_vallist_length_prefixed_create (void *arg) {
 einval:
   errno = EINVAL;
   return NULL;
+}
+
+static void jill_vallist_length_prefixed_destroy (struct jill_vallist *self) {
+  struct jill_vallist_length_prefixed *lp = jill_cont (self,
+    struct jill_vallist_length_prefixed, vallist);
+  if (lp->lenbuf)
+    free (lp->lenbuf);
+  if (lp->valbuf)
+    free (lp->valbuf);
+  free (lp);
+}
+
+static int jill_vallist_length_prefixed_setopt (struct jill_vallist *self,
+    int option, const void *optval, size_t optvallen) {
+  /*  not supported */
+  return EINVAL;
+}
+
+static int jill_vallist_length_prefixed_getopt (struct jill_vallist *self,
+    int option, void *optval, size_t *optvallen) {
+  /*  not supported */
+  return EINVAL;
 }
 
 static inline int jill_vallist_length_prefixed_lensz (
@@ -226,14 +254,4 @@ static int jill_vallist_length_prefixed_query (struct jill_vallist *self,
     void *query, void *result) {
   /*  not supported yet */
   return EINVAL;
-}
-
-static void jill_vallist_length_prefixed_destroy (struct jill_vallist *self) {
-  struct jill_vallist_length_prefixed *lp = jill_cont (self,
-    struct jill_vallist_length_prefixed, vallist);
-  if (lp->lenbuf)
-    free (lp->lenbuf);
-  if (lp->valbuf)
-    free (lp->valbuf);
-  free (lp);
 }

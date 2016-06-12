@@ -11,6 +11,12 @@ struct jill_vallist_base {
   struct jill_vallist *(*create) (void *arg);
   /*  free allocated memory for vallist */
   void (*destroy) (struct jill_vallist *self);
+  /*  set option */
+  int (*setopt) (struct jill_vallist *self, int option, const void *optval,
+    size_t optvallen);
+  /*  get option */
+  int (*getopt) (struct jill_vallist *self, int option, void *optval,
+    size_t *optvallen);
   /*  insert new element to the index. returns errno if error,
       zero on success. */
   int (*insert) (struct jill_vallist *self, struct jill_value *value);
