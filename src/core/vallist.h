@@ -52,6 +52,19 @@ int jill_vallist_register (int type, struct jill_vallist_base *base);
 /*  create new vallist with given type. */
 struct jill_vallist *jill_vallist_create (int type, void *arg);
 
+/*  destroy the index */
+void jill_vallist_destroy (struct jill_vallist *self);
+
+/*  set option */
+int jill_vallist_setopt (struct jill_vallist *self, int option,
+  const void *optval, size_t optvallen);
+/*  get option */
+int jill_vallist_getopt (struct jill_vallist *self, int option, void *optval,
+  size_t *optvallen);
+/*  call custom method */
+int jill_vallist_run_custom_method (struct jill_vallist *self, int method,
+  void *arg, void *result);
+
 /*  insert new element to the index. returns errno if error,
     zero on success. */
 int jill_vallist_insert (struct jill_vallist *self, struct jill_value *value);
@@ -66,8 +79,5 @@ int jill_vallist_get (struct jill_vallist *self, int index,
 
 /*  query the index */
 int jill_vallist_query (struct jill_vallist *self, void *query, void *result);
-
-/*  destroy the index */
-void jill_vallist_destroy (struct jill_vallist *self);
 
 #endif

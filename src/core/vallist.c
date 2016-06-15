@@ -70,9 +70,31 @@ struct jill_vallist *jill_vallist_create (int type, void *arg) {
   return base_arr[type]->create (arg);
 }
 
+void jill_vallist_destroy (struct jill_vallist *self) {
+  return self->base->destroy (self);
+}
+
 int jill_vallist_insert (struct jill_vallist *self,
     struct jill_value *value) {
   return self->base->insert (self, value);
+}
+
+/*  set option */
+int jill_vallist_setopt (struct jill_vallist *self, int option,
+    const void *optval, size_t optvallen) {
+  return self->base->setopt (self, option, optval, optvallen);
+}
+
+/*  get option */
+int jill_vallist_getopt (struct jill_vallist *self, int option, void *optval,
+    size_t *optvallen) {
+  return self->base->getopt (self, option, optval, optvallen);
+}
+
+/*  call custom method */
+int jill_vallist_run_custom_method (struct jill_vallist *self, int method,
+    void *arg, void *result) {
+  return self->base->run_custom_method (self, method, arg, result);
 }
 
 int jill_vallist_set (struct jill_vallist *self, int index,
@@ -87,8 +109,4 @@ int jill_vallist_get (struct jill_vallist *self, int index,
 
 int jill_vallist_query (struct jill_vallist *self, void *query, void *result) {
   return self->base->query (self, query, result);
-}
-
-void jill_vallist_destroy (struct jill_vallist *self) {
-  return self->base->destroy (self);
 }
