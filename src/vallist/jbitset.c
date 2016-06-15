@@ -15,10 +15,13 @@ struct jill_vallist_bitset {
 
 static struct jill_vallist *jill_vallist_bitset_create (void *arg);
 static void jill_vallist_bitset_destroy (struct jill_vallist *self);
-static int jill_vallist_bitset_setopt (struct jill_vallist *self, int option, const void *optval,
-  size_t optvallen);
-static int jill_vallist_bitset_getopt (struct jill_vallist *self, int option, void *optval,
-  size_t *optvallen);
+static int jill_vallist_bitset_setopt (struct jill_vallist *self, int option,
+  const void *optval, size_t optvallen);
+static int jill_vallist_bitset_getopt (struct jill_vallist *self, int option,
+  void *optval, size_t *optvallen);
+static int jill_vallist_bitset_run_custom_method (struct jill_vallist *self,
+  int method, void *arg,
+  void *result);
 static int jill_vallist_bitset_insert (struct jill_vallist *self,
   struct jill_value *value);
 static int jill_vallist_bitset_set (struct jill_vallist *self, int index,
@@ -34,6 +37,7 @@ struct jill_vallist_base jill_vallist_bitset_base = {
   jill_vallist_bitset_destroy,
   jill_vallist_bitset_setopt,
   jill_vallist_bitset_getopt,
+  jill_vallist_bitset_run_custom_method,
   jill_vallist_bitset_insert,
   jill_vallist_bitset_set,
   jill_vallist_bitset_get,
@@ -69,14 +73,20 @@ static void jill_vallist_bitset_destroy (struct jill_vallist *self) {
   free (bs);
 }
 
-static int jill_vallist_bitset_setopt (struct jill_vallist *self, int option, const void *optval,
-    size_t optvallen) {
+static int jill_vallist_bitset_setopt (struct jill_vallist *self, int option,
+    const void *optval, size_t optvallen) {
   /*  not supported */
   return EINVAL;
 }
 
-static int jill_vallist_bitset_getopt (struct jill_vallist *self, int option, void *optval,
-    size_t *optvallen) {
+static int jill_vallist_bitset_getopt (struct jill_vallist *self, int option,
+    void *optval, size_t *optvallen) {
+  /*  not supported */
+  return EINVAL;
+}
+
+static int jill_vallist_bitset_run_custom_method (struct jill_vallist *self,
+    int method, void *arg, void *result) {
   /*  not supported */
   return EINVAL;
 }

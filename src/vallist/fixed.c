@@ -30,15 +30,20 @@ struct jill_vallist_fixed {
 
 static struct jill_vallist *jill_vallist_fixed_create (void *arg);
 static void jill_vallist_fixed_destroy (struct jill_vallist *self);
-static int jill_vallist_fixed_setopt (struct jill_vallist *self, int option, const void *optval,
-  size_t optvallen);
-static int jill_vallist_fixed_getopt (struct jill_vallist *self, int option, void *optval,
-  size_t *optvallen);
-static int jill_vallist_fixed_insert (struct jill_vallist *self, struct jill_value *value);
+static int jill_vallist_fixed_setopt (struct jill_vallist *self, int option,
+  const void *optval, size_t optvallen);
+static int jill_vallist_fixed_getopt (struct jill_vallist *self, int option,
+  void *optval, size_t *optvallen);
+static int jill_vallist_fixed_run_custom_method (struct jill_vallist *self,
+  int method, void *arg, void *result);
+static int jill_vallist_fixed_insert (struct jill_vallist *self,
+  struct jill_value *value);
 static int jill_vallist_fixed_set (struct jill_vallist *self, int index,
   struct jill_value *value);
-static int jill_vallist_fixed_get (struct jill_vallist *self, int index, struct jill_value **value);
-static int jill_vallist_fixed_query (struct jill_vallist *self, void *query, void *result);
+static int jill_vallist_fixed_get (struct jill_vallist *self, int index,
+  struct jill_value **value);
+static int jill_vallist_fixed_query (struct jill_vallist *self, void *query,
+  void *result);
 
 static int jill_vallist_fixed_one_el_size (struct jill_vallist_fixed *fx);
 
@@ -48,6 +53,7 @@ struct jill_vallist_base jill_vallist_fixed_base = {
   jill_vallist_fixed_destroy,
   jill_vallist_fixed_setopt,
   jill_vallist_fixed_getopt,
+  jill_vallist_fixed_run_custom_method,
   jill_vallist_fixed_insert,
   jill_vallist_fixed_set,
   jill_vallist_fixed_get,
@@ -97,14 +103,20 @@ static void jill_vallist_fixed_destroy (struct jill_vallist *self) {
   free (fx);
 }
 
-static int jill_vallist_fixed_setopt (struct jill_vallist *self, int option, const void *optval,
-  size_t optvallen) {
+static int jill_vallist_fixed_setopt (struct jill_vallist *self, int option,
+    const void *optval, size_t optvallen) {
   /*  not supported */
   return EINVAL;
 }
 
-static int jill_vallist_fixed_getopt (struct jill_vallist *self, int option, void *optval,
-  size_t *optvallen) {
+static int jill_vallist_fixed_getopt (struct jill_vallist *self, int option,
+    void *optval, size_t *optvallen) {
+  /*  not supported */
+  return EINVAL;
+}
+
+static int jill_vallist_fixed_run_custom_method (struct jill_vallist *self,
+    int method, void *arg, void *result) {
   /*  not supported */
   return EINVAL;
 }

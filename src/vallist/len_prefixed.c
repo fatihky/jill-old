@@ -17,6 +17,8 @@ static int jill_vallist_length_prefixed_setopt (struct jill_vallist *self,
   int option, const void *optval, size_t optvallen);
 static int jill_vallist_length_prefixed_getopt (struct jill_vallist *self,
   int option, void *optval, size_t *optvallen);
+static int jill_vallist_length_prefixed_run_custom_method (
+  struct jill_vallist *self, int method, void *arg, void *result);
 static int jill_vallist_length_prefixed_insert (struct jill_vallist *self,
   struct jill_value *value);
 static int jill_vallist_length_prefixed_set (struct jill_vallist *self,
@@ -35,6 +37,7 @@ struct jill_vallist_base jill_vallist_length_prefixed_base = {
   jill_vallist_length_prefixed_destroy,
   jill_vallist_length_prefixed_setopt,
   jill_vallist_length_prefixed_getopt,
+  jill_vallist_length_prefixed_run_custom_method,
   jill_vallist_length_prefixed_insert,
   jill_vallist_length_prefixed_set,
   jill_vallist_length_prefixed_get,
@@ -103,6 +106,12 @@ static int jill_vallist_length_prefixed_setopt (struct jill_vallist *self,
 
 static int jill_vallist_length_prefixed_getopt (struct jill_vallist *self,
     int option, void *optval, size_t *optvallen) {
+  /*  not supported */
+  return EINVAL;
+}
+
+static int jill_vallist_length_prefixed_run_custom_method (
+    struct jill_vallist *self, int method, void *arg, void *result) {
   /*  not supported */
   return EINVAL;
 }

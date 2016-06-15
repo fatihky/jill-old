@@ -17,6 +17,9 @@ struct jill_vallist_base {
   /*  get option */
   int (*getopt) (struct jill_vallist *self, int option, void *optval,
     size_t *optvallen);
+  /*  call custom method */
+  int (*run_custom_method) (struct jill_vallist *self, int method, void *arg,
+    void *result);
   /*  insert new element to the index. returns errno if error,
       zero on success. */
   int (*insert) (struct jill_vallist *self, struct jill_value *value);
