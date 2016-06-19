@@ -55,7 +55,13 @@ int main(int argc, char *argv[]) {
     assert (vl);
     val.valp = strval;
     val.lenp = &len;
-    //jill_vallist_lp_prealloc (&vl, len * count);
+    int prealloc = len * count;
+    rc = jill_vallist_run_custom_method (vl,
+      JILL_VALLIST_LENGTH_PREFIXED_CMD_GROWLB, &count, NULL);
+    assert (rc == 0);
+    rc = jill_vallist_run_custom_method (vl,
+      JILL_VALLIST_LENGTH_PREFIXED_CMD_EXTENDV, &prealloc, NULL);
+    assert (rc == 0);
   }, {
     jill_vallist_destroy (vl);
   }, {

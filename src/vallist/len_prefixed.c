@@ -113,7 +113,49 @@ static int jill_vallist_length_prefixed_getopt (struct jill_vallist *self,
 static int jill_vallist_length_prefixed_run_custom_method (
     struct jill_vallist *self, int method, void *arg, void *result) {
   /*  not supported */
-  return EINVAL;
+  int *ival;
+  void *ptr;
+  size_t nsize;
+  struct jill_vallist_length_prefixed *lp = jill_cont (self,
+    struct jill_vallist_length_prefixed, vallist);
+
+  /*  initialize variables. validate user input */
+  switch (method) {
+    case JILL_VALLIST_LENGTH_PREFIXED_CMD_GROWLB:
+    case JILL_VALLIST_LENGTH_PREFIXED_CMD_EXTENDV: {
+      if (!arg)
+        return EINVAL; /*  argument is required */
+      ival = arg;
+      if (*ival < 0)
+        return EINVAL; /*  argument must be greater than or equal to zero */
+    } break;
+    default:
+      return EINVAL; /*  invalid command */
+  }
+
+  switch (method) {
+    case JILL_VALLIST_LENGTH_PREFIXED_CMD_GROWLB: {
+      nsize = lp->lenbuf_capacity + (lp->lensz * (*ival));
+      ptr = lp->lenbuf;
+      ptr = realloc (ptr, nsize);
+      if (!ptr)
+        return ENOMEM;
+      lp->lenbuf = ptr;
+      lp->lenbuf_capacity = nsize;
+    } break;
+    case JILL_VALLIST_LENGTH_PREFIXED_CMD_EXTENDV: {
+      nsize = lp->valbuf_capacity + (*ival);
+      ptr = lp->valbuf;
+      ptr = realloc (ptr, nsize);
+      if (!ptr)
+        return ENOMEM;
+      lp->valbuf = ptr;
+      lp->valbuf_capacity = nsize;
+    } break;
+    default: break;
+  }
+
+  return 0;
 }
 
 static inline int jill_vallist_length_prefixed_lensz (
