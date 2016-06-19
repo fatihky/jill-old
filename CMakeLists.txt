@@ -25,6 +25,7 @@ if (LIBJILL_TESTS)
   add_libjill_test (bitset 5)
   add_libjill_test (field 5)
   add_libjill_test (vallist 5)
+  add_libjill_test (dict 5)
 
   #  Build the performance tests.
 
