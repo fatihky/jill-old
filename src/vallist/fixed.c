@@ -72,7 +72,6 @@ static struct jill_vallist *jill_vallist_fixed_create (void *arg_) {
 
   fx = calloc (1, sizeof (struct jill_vallist_fixed));
 
-
   if (!fx) {
     errno = ENOMEM;
     return NULL;
