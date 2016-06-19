@@ -1,3 +1,6 @@
 [submodule "src/3rdparty/cbitset"]
 	path = src/3rdparty/cbitset
 	url = https://github.com/lemire/cbitset
+[submodule "src/3rdparty/redis"]
+	path = src/3rdparty/redis
+	url = git@github.com:antirez/redis
