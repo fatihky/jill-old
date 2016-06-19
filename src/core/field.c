@@ -2,6 +2,7 @@
 #include <string.h>
 #include <errno.h>
 #include <assert.h>
+#include "common.h"
 #include "field.h"
 
 int jill_field_init (struct jill_field *self) {
