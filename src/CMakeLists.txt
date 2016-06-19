@@ -1,5 +1,8 @@
 set (LIBJILL_SRC
+  # third party code
   3rdparty/cbitset/src/bitset.c
+  3rdparty/redis/src/zmalloc.c
+  3rdparty/redis/src/dict.c
 
   core/field.c
   core/piece.c
