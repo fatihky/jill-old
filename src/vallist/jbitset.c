@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <errno.h>
 #include "jbitset.h"
+#include "../core/common.h"
 #include "../core/vallist.h"
 #include "../utils/cont.h"
 
@@ -47,7 +48,9 @@ struct jill_vallist_base jill_vallist_bitset_base = {
 static struct jill_vallist *jill_vallist_bitset_create (void *arg) {
   (void) arg;
   struct jill_vallist_bitset *bs = NULL;
-  bs = malloc (sizeof (struct jill_vallist_bitset));
+
+  bs = zcalloc (sizeof (struct jill_vallist_bitset));
+
   if (!bs)
     goto enomem;
 
@@ -61,7 +64,7 @@ static struct jill_vallist *jill_vallist_bitset_create (void *arg) {
 
 enomem:
   if (bs)
-    free (bs);
+    zfree (bs);
   errno = ENOMEM;
   return NULL;
 }
@@ -70,7 +73,7 @@ static void jill_vallist_bitset_destroy (struct jill_vallist *self) {
   struct jill_vallist_bitset *bs = jill_cont (self, struct jill_vallist_bitset,
     vallist);
   bitset_free (bs->bitset);
-  free (bs);
+  zfree (bs);
 }
 
 static int jill_vallist_bitset_setopt (struct jill_vallist *self, int option,

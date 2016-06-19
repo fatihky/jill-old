@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <errno.h>
+#include "../core/common.h"
 #include "../core/vallist.h"
 #include "../utils/cont.h"
 #include "fixed.h"
@@ -70,7 +71,7 @@ static struct jill_vallist *jill_vallist_fixed_create (void *arg_) {
     return NULL;
   }
 
-  fx = calloc (1, sizeof (struct jill_vallist_fixed));
+  fx = zcalloc (sizeof (struct jill_vallist_fixed));
 
   if (!fx) {
     errno = ENOMEM;
@@ -87,7 +88,7 @@ static struct jill_vallist *jill_vallist_fixed_create (void *arg_) {
   if (one_el_sz <= 0) {
     /*  invalid subtype */
     errno = EINVAL;
-    free (fx);
+    zfree (fx);
     return NULL;
   }
 
@@ -98,8 +99,8 @@ static void jill_vallist_fixed_destroy (struct jill_vallist *self) {
   struct jill_vallist_fixed *fx = jill_cont (self, struct jill_vallist_fixed,
     vallist);
   if (fx->arr.custom)
-    free (fx->arr.custom);
-  free (fx);
+    zfree (fx->arr.custom);
+  zfree (fx);
 }
 
 static int jill_vallist_fixed_setopt (struct jill_vallist *self, int option,
@@ -145,7 +146,7 @@ static int jill_vallist_fixed_grow (struct jill_vallist_fixed *fx) {
   void *ptr = fx->arr.custom;
   size_t one_el_sz = jill_vallist_fixed_one_el_size (fx);
   size_t needed = one_el_sz * (fx->capacity + fx->grow);
-  ptr = realloc (ptr, needed);
+  ptr = zrealloc (ptr, needed);
   if (!ptr)
     return ENOMEM;
   fx->arr.custom = ptr;

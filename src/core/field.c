@@ -10,7 +10,7 @@ int jill_field_init (struct jill_field *self) {
 
 int jill_field_set_name (struct jill_field *self, char *name, size_t namelen) {
   char *ptr;
-  ptr = malloc(namelen);
+  ptr = zmalloc (namelen);
   if (ptr == NULL)
     return ENOMEM;
   memcpy (ptr, name, namelen);
@@ -20,5 +20,5 @@ int jill_field_set_name (struct jill_field *self, char *name, size_t namelen) {
 
 void jill_field_term (struct jill_field *self) {
   if (self->name)
-    free (self->name);
+    zfree (self->name);
 }

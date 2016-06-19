@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "common.h"
 #include "skiplist.h"
 
 void jill_skiplist_init (struct jill_skiplist *self) {
@@ -8,5 +9,5 @@ void jill_skiplist_init (struct jill_skiplist *self) {
 
 void jill_skiplist_term (struct jill_skiplist *self) {
   if (self->element_count > 0)
-    free (self->elements);
+    zfree (self->elements);
 }

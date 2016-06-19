@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <errno.h>
 #include <assert.h>
+#include "../core/common.h"
 #include "../core/vallist.h"
 #include "../utils/cont.h"
 #include "len_prefixed.h"
@@ -69,7 +70,7 @@ static struct jill_vallist *jill_vallist_length_prefixed_create (void *arg) {
   if (subtype < 0 || subtype > JILL_VALLIST_LENGTH_PREFIXED_U32)
     goto einval;
 
-  lp = calloc (1, sizeof (struct jill_vallist_length_prefixed));
+  lp = zcalloc (sizeof (struct jill_vallist_length_prefixed));
   if (!lp) {
     errno = ENOMEM;
     return NULL;
@@ -92,10 +93,10 @@ static void jill_vallist_length_prefixed_destroy (struct jill_vallist *self) {
   struct jill_vallist_length_prefixed *lp = jill_cont (self,
     struct jill_vallist_length_prefixed, vallist);
   if (lp->lenbuf)
-    free (lp->lenbuf);
+    zfree (lp->lenbuf);
   if (lp->valbuf)
-    free (lp->valbuf);
-  free (lp);
+    zfree (lp->valbuf);
+  zfree (lp);
 }
 
 static int jill_vallist_length_prefixed_setopt (struct jill_vallist *self,
@@ -137,7 +138,7 @@ static int jill_vallist_length_prefixed_run_custom_method (
     case JILL_VALLIST_LENGTH_PREFIXED_CMD_GROWLB: {
       nsize = lp->lenbuf_capacity + (lp->lensz * (*ival));
       ptr = lp->lenbuf;
-      ptr = realloc (ptr, nsize);
+      ptr = zrealloc (ptr, nsize);
       if (!ptr)
         return ENOMEM;
       lp->lenbuf = ptr;
@@ -146,7 +147,7 @@ static int jill_vallist_length_prefixed_run_custom_method (
     case JILL_VALLIST_LENGTH_PREFIXED_CMD_EXTENDV: {
       nsize = lp->valbuf_capacity + (*ival);
       ptr = lp->valbuf;
-      ptr = realloc (ptr, nsize);
+      ptr = zrealloc (ptr, nsize);
       if (!ptr)
         return ENOMEM;
       lp->valbuf = ptr;
@@ -181,7 +182,7 @@ static int jill_vallist_length_prefixed_grow_lenbuf (
     return 0;
 
   void *ptr = self->lenbuf;
-  ptr = realloc (ptr, needed);
+  ptr = zrealloc (ptr, needed);
 
   if (!ptr)
     return ENOMEM;
@@ -251,7 +252,7 @@ static int jill_vallist_length_prefixed_insert (struct jill_vallist *self,
   needed = lp->valbuf_size + vallen;
   if (needed > lp->valbuf_capacity) {
     void *ptr = lp->valbuf;
-    ptr = realloc (ptr, needed);
+    ptr = zrealloc (ptr, needed);
     if (!ptr)
       return ENOMEM;
     lp->valbuf = ptr;

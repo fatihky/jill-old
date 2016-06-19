@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <errno.h>
 #include "vallist.h"
+#include "common.h"
 #include "../utils/cont.h"
 #include "../vallist/common.h"
 
@@ -38,7 +39,7 @@ int jill_vallist_register (int type, struct jill_vallist_base *base) {
 
   if (base_arr_len < expected_len) {
     size_t nsize = expected_len * sizeof(void *);
-    ptr = realloc(base_arr, nsize);
+    ptr = zrealloc(base_arr, nsize);
     if (ptr == NULL)
       return ENOMEM;
 
