@@ -10,8 +10,6 @@ static int keyCompare (void *privdata, const void *key1, const void *key2);
 static void keyDestructor (void *privdata, void *key);
 static void valDestructor(void *privdata, void *obj);
 
-#define min(a, b) (a < b ? a : b)
-
 dictType dictTypeJillValToPtr = {
   hash,
   keyDup,
@@ -69,7 +67,10 @@ static int keyCompare (void *privdata, const void *key1, const void *key2) {
   int l1 = *(int *)v1->lenp;
   int l2 = *(int *)v2->lenp;
 
-  return memcmp (v1->valp, v2->valp, min(l1, l2)) == 0;
+  if (l1 != l2)
+    return 0;
+
+  return memcmp (v1->valp, v2->valp, l1) == 0;
 }
 
 static void keyDestructor (void *privdata, void *key) {
