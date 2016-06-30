@@ -14,6 +14,7 @@ set (LIBJILL_SRC
   vallist/fixed.c
   vallist/len_prefixed.c
   vallist/jbitset.c
+  vallist/distinct.c
 
   utils/stopwatch.c
   utils/redis-compat.c
