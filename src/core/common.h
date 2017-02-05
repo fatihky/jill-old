@@ -1,3 +1,5 @@
+#include <string.h> // for size_t
+
 #include "../3rdparty/redis/src/zmalloc.h"
 #include "../3rdparty/redis/src/dict.h"
 

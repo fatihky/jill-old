@@ -8,6 +8,13 @@ add_definitions(-std=gnu11)
 include_directories (src/3rdparty/cbitset/include)
 include_directories (src)
 
+macro (add_libjill_example NAME)
+  add_executable (${NAME} examples/${NAME}.c)
+  target_link_libraries (${NAME} ${PROJECT_NAME})
+endmacro (add_libjill_example)
+
+add_libjill_example(hashtag)
+
 if (LIBJILL_TESTS)
   enable_testing ()
   set (all_tests "")

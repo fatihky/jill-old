@@ -23,6 +23,10 @@ int jill_vallist_global_init() {
   rc = jill_vallist_register (JILL_VALLIST_BITSET, &jill_vallist_bitset_base);
   if (rc != 0)
     return rc;
+  rc = jill_vallist_register (JILL_VALLIST_DISTINCT,
+    &jill_vallist_distinct_base);
+  if (rc != 0)
+    return rc;
   return 0;
 }
 
